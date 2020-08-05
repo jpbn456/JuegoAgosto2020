@@ -6,5 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static Cuenta cuentaActiva;
     public static int pestaniaActiva;
+    public static int cantidadLikes;
+    public static int cantidadDislikes;
+
 
 }
