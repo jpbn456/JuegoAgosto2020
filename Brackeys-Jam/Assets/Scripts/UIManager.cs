@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public GameObject[] pestanias;
     public GameObject[] paneles;
+    public GameObject clicker;
+    public GameObject popUps;
     void Start()
     {
         
@@ -14,7 +16,11 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+            popUps.SetActive(true);
+        }
     }
 
     public void CambiarPestania(int pestaniaNueva)
