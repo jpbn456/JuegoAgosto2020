@@ -17,24 +17,30 @@ public class PopUp : MonoBehaviour
         {
             if(ContarPopUpsCerrados() == popUpsGO.Length)
             {
-                this.gameObject.SetActive(false);
                 inicializado = false;
+                this.gameObject.SetActive(false);
             }
         }
     }
     private void OnEnable()
     {
-        popUpActivos = Random.Range(1, popUpsGO.Length);
-        
-        for (int i = 0; i < popUpActivos; i++)
-        {
-            popUpsGO[i].SetActive(true);
-        }
-        inicializado = true;
+        StartCoroutine("InicializarJuego");
     }
     public void CerrarPopUp(int posicionPopUp)
     {
         popUpsGO[posicionPopUp].SetActive(false);
+    }
+    IEnumerator InicializarJuego()
+    {
+        popUpActivos = Random.Range(1, popUpsGO.Length);
+
+        for (int i = 0; i < popUpActivos; i++)
+        {
+            popUpsGO[i].SetActive(true);
+            yield return new WaitForSeconds(.1f);
+        }
+        inicializado = true;
+        
     }
     int ContarPopUpsCerrados()
     {

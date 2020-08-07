@@ -84,6 +84,8 @@ public class BancoCuentas : MonoBehaviour
             GameManager.cuentaActiva = cuentas[i];
             logOut.SetActive(true);
             nombreCuentaActiva.text = GameManager.cuentaActiva.nombreUsuario;
+            usuarioLogIn.text = "";
+            contraseniaLogIn.text = "";
             logIn.SetActive(false);
             InicializarBotonesLike();
 
@@ -100,6 +102,7 @@ public class BancoCuentas : MonoBehaviour
         logOut.SetActive(false);
         logIn.SetActive(true);
         panelLogIn.SetActive(false);
+        CambiarColoresBotones(Color.white,Color.white);
     }
     bool EspaciosCompletos()
     {
@@ -233,9 +236,12 @@ public class BancoCuentas : MonoBehaviour
     {
         ColorBlock cb = likeButton.colors;
         cb.normalColor = colorLike;
+        cb.highlightedColor = colorLike;
         likeButton.colors = cb;
+        //
         cb = dislikeButton.colors;
         cb.normalColor = colorDislike;
+        cb.highlightedColor = colorDislike;
         dislikeButton.colors = cb;
     }
 }

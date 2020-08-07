@@ -1,13 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject[] pestanias;
     public GameObject[] paneles;
-    public GameObject clicker;
-    public GameObject popUps;
+    public GameObject[] minijuegos;
+    public GameObject gameOverGO;
+    public Text tiempoRestanteText;
+    public Text cantidadDislikes;
+    int juegoActivo = 0;
+    float tiempoEntreMiniMin;
+    float tiempoEntreMiniMax;
+    float tiempoEntreMini;
+    float timer = 0;
+    private void Awake()
+    {
+        tiempoEntreMiniMin = PlayerPrefs.GetFloat("TiempoEntreMinijuegosMin");
+        tiempoEntreMiniMax = PlayerPrefs.GetFloat("TiempoEntreMinijuegosMax");
+        tiempoEntreMini = Random.Range(tiempoEntreMiniMin, tiempoEntreMiniMax);
+    }
     void Start()
     {
         
@@ -16,11 +31,34 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        tiempoRestanteText.text = "Tiempo restante" + GameManager.minutosRestantes + ":" + GameManager.segundosRestantes;
+        if (GameManager.gameOver)
         {
-
-            popUps.SetActive(true);
+            gameOverGO.SetActive(true);
+            cantidadDislikes.text = "Cantidad dislikes: " + GameManager.cantidadDislikes;
+            return;
         }
+        if (!EstaActivo(juegoActivo))
+        {
+            timer += Time.deltaTime;
+            if (timer >= tiempoEntreMini)
+            {
+                juegoActivo = Random.Range(0, minijuegos.Length);
+                minijuegos[juegoActivo].SetActive(true);
+                timer = 0;
+                tiempoEntreMini = Random.Range(tiempoEntreMiniMin, tiempoEntreMiniMax);
+            }
+        }
+        else
+        {
+            Debug.Log("minijuegoActivo");
+        }
+        
+        
+    }
+    bool EstaActivo(int juegoActivo)
+    {
+        return minijuegos[juegoActivo].activeSelf;
     }
 
     public void CambiarPestania(int pestaniaNueva)
@@ -45,15 +83,9 @@ public class UIManager : MonoBehaviour
     {
         paneles[panel].SetActive(!paneles[panel].activeSelf);
     }
-    public void LikeODislike(int estado)//-1 para dislike 1 para like
+    public void CargarEscena(string escena)
     {
-        if(GameManager.cuentaActiva == null)
-        {
-            AbrirPanel(0);
-        }
-        else
-        {
-
-        }
+        SceneManager.LoadScene(escena);
     }
+
 }
