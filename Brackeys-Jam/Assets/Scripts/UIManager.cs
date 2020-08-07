@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
     }
     public void CargarEscena(string escena)
     {
+        gameOverGO.SetActive(false);
         SceneManager.LoadScene(escena);
     }
 
