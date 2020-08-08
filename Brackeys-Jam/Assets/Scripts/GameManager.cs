@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public static int segundosRestantes = 0;
     private void Awake()
     {
-        tiempoMax = PlayerPrefs.GetFloat("TiempoPartida") * 60;
+        tiempoMax = 180;
         tiempoActual = 0;
         gameOver = false;
         minutosRestantes = 0;

@@ -46,6 +46,6 @@ public class ValoresPrueba : MonoBehaviour
         {
             PlayerPrefs.SetFloat("TiempoEntreMinijuegosMax", 15);
         }
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("TitleScreen");
     }
 }

@@ -27,10 +27,12 @@ public class UIManager : MonoBehaviour
     public Sprite spriteDesactivadoUtub;
     public Sprite spriteActivadoUtub;
 
+    public GameObject panelTransicion;
+
     private void Awake()
     {
-        tiempoEntreMiniMin = PlayerPrefs.GetFloat("TiempoEntreMinijuegosMin");
-        tiempoEntreMiniMax = PlayerPrefs.GetFloat("TiempoEntreMinijuegosMax");
+        tiempoEntreMiniMin = 8;
+        tiempoEntreMiniMax = 13;
         tiempoEntreMini = Random.Range(tiempoEntreMiniMin, tiempoEntreMiniMax);
     }
     void Start()
@@ -41,11 +43,18 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tiempoRestanteText.text = "Time remaining" + GameManager.minutosRestantes + ":" + GameManager.segundosRestantes;
+        string condicional = "";
+        if(GameManager.segundosRestantes < 10)
+        {
+            condicional = "0";
+        }
+        tiempoRestanteText.text = "Time remaining: " + GameManager.minutosRestantes + ":" + condicional+ GameManager.segundosRestantes;
         if (GameManager.gameOver)
         {
-            gameOverGO.SetActive(true);
-            cantidadDislikes.text = "Cantidad dislikes: " + GameManager.cantidadDislikes;
+            //gameOverGO.SetActive(true);
+            PlayerPrefs.SetInt("CantidadFinalDislikes", GameManager.cantidadDislikes);
+            panelTransicion.GetComponent<CargarEscenas>().CargarEscenaDefault("FinalScene");
+            //cantidadDislikes.text = "Cantidad dislikes: " + GameManager.cantidadDislikes;
             return;
         }
         if (!EstaActivo(juegoActivo))
@@ -108,5 +117,6 @@ public class UIManager : MonoBehaviour
         gameOverGO.SetActive(false);
         SceneManager.LoadScene(escena);
     }
+    
 
 }

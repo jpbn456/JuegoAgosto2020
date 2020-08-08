@@ -93,18 +93,14 @@ public class BancoCuentas : MonoBehaviour
             if(cuentas[i].nombreUsuario == usuarioLogIn.text)
             {
                 usuarioExiste = true;
+                if (cuentas[i].contrasenia == contraseniaLogIn.text)
+                {
+                    contraseniaCorrecta = true;
+                }
             }
             else i++;
         }
-        i = 0;
-        while (i<cuentas.Count && usuarioExiste && !contraseniaCorrecta)
-        {
-            if(cuentas[i].contrasenia == contraseniaLogIn.text)
-            {
-                contraseniaCorrecta = true;
-            }
-            else i++;
-        }
+        
         if(usuarioExiste && contraseniaCorrecta)
         {
             warningPadreLogIn.SetActive(false);
