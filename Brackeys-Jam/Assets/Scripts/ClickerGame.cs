@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ClickerGame : MonoBehaviour
 {
+    public AudioSource sonido;
     float puntaje = 0;
     public float puntajeBoton;
     public float defaultSpeed;
@@ -33,5 +34,6 @@ public class ClickerGame : MonoBehaviour
     private void OnEnable()
     {
         puntaje = 0;
+        sonido.Play();
     }
 }

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        minutosRestantes = ((int)((tiempoMax - tiempoActual)/60)) % 1;
+        minutosRestantes = ((int)((tiempoMax - tiempoActual)/60)) / 1;
         segundosRestantes = (int)((tiempoMax - tiempoActual) - (minutosRestantes * 60));
         if(tiempoActual < tiempoMax)
         {

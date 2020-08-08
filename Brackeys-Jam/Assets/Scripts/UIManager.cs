@@ -17,6 +17,16 @@ public class UIManager : MonoBehaviour
     float tiempoEntreMiniMax;
     float tiempoEntreMini;
     float timer = 0;
+
+    //Cambios Sprite
+    public Image mailSR;
+    public Sprite spriteDesactivadoMail;
+    public Sprite spriteActivadoMail;
+
+    public Image utubSR;
+    public Sprite spriteDesactivadoUtub;
+    public Sprite spriteActivadoUtub;
+
     private void Awake()
     {
         tiempoEntreMiniMin = PlayerPrefs.GetFloat("TiempoEntreMinijuegosMin");
@@ -31,7 +41,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tiempoRestanteText.text = "Tiempo restante" + GameManager.minutosRestantes + ":" + GameManager.segundosRestantes;
+        tiempoRestanteText.text = "Time remaining" + GameManager.minutosRestantes + ":" + GameManager.segundosRestantes;
         if (GameManager.gameOver)
         {
             gameOverGO.SetActive(true);
@@ -73,6 +83,16 @@ public class UIManager : MonoBehaviour
             {
                 pestanias[i].SetActive(true);
             }
+        }
+        if(pestaniaNueva == 0)
+        {
+            utubSR.sprite = spriteActivadoUtub;
+            mailSR.sprite = spriteDesactivadoMail;
+        }
+        else if(pestaniaNueva == 1)
+        {
+            utubSR.sprite = spriteDesactivadoUtub;
+            mailSR.sprite = spriteActivadoMail;
         }
     }
     public void AbrirPanel(int panel)

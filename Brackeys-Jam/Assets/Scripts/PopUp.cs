@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PopUp : MonoBehaviour
 {
+    public AudioSource sonido;
     public GameObject[] popUpsGO;
     int popUpActivos;
     bool inicializado = false;
@@ -37,6 +38,7 @@ public class PopUp : MonoBehaviour
         for (int i = 0; i < popUpActivos; i++)
         {
             popUpsGO[i].SetActive(true);
+            sonido.Play();
             yield return new WaitForSeconds(.1f);
         }
         inicializado = true;

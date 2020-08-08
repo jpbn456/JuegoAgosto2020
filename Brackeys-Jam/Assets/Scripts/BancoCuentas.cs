@@ -21,11 +21,18 @@ public class BancoCuentas : MonoBehaviour
 
     public Button likeButton;
     public Button dislikeButton;
-    /*
-    ColorBlock cb = b.colors;
-    cb.normalColor = Color.white;
-    b.colors = cb;
-    */
+
+    public Text scoreText;
+
+
+    //Warnings
+    public GameObject accountCreatedGO;
+    public GameObject warningPadre;
+    public Text warningText;
+
+    public GameObject warningPadreLogIn;
+    public Text warningTextLogIn;
+
 
     bool yaExiste = false;
     EventSystem system;
@@ -46,8 +53,10 @@ public class BancoCuentas : MonoBehaviour
     
     public void AgregarCuenta()
     {
-        if (!yaExiste && EspaciosCompletos())
+        if (!yaExiste && EspaciosCompletos() && !ContraseniaIgualUsuario())
         {
+            warningPadre.SetActive(false);
+            accountCreatedGO.SetActive(true);
             Cuenta cuentaNueva = new Cuenta();
             cuentaNueva.nombreUsuario = usuario.text;
             cuentaNueva.contrasenia = contrasenia.text;
@@ -56,6 +65,23 @@ public class BancoCuentas : MonoBehaviour
             usuario.text = "";
             contrasenia.text = "";
         }
+        else if (ContraseniaIgualUsuario())
+        {
+            accountCreatedGO.SetActive(false);
+            warningPadre.SetActive(true);
+            warningText.text = "Password can't be the same as the username!!";
+        }
+        if (yaExiste)
+        {
+            accountCreatedGO.SetActive(false);
+            warningPadre.SetActive(true);
+            warningText.text = "This account already exists!!";
+        }
+        
+    }
+    public void EditoLogIn()
+    {
+        warningPadreLogIn.SetActive(false);
     }
     public void IniciarSesion()
     {
@@ -81,6 +107,7 @@ public class BancoCuentas : MonoBehaviour
         }
         if(usuarioExiste && contraseniaCorrecta)
         {
+            warningPadreLogIn.SetActive(false);
             GameManager.cuentaActiva = cuentas[i];
             logOut.SetActive(true);
             nombreCuentaActiva.text = GameManager.cuentaActiva.nombreUsuario;
@@ -93,7 +120,8 @@ public class BancoCuentas : MonoBehaviour
         else
         {
             //Mostrar Warning
-            Debug.Log("datos incorrectos");
+            warningPadreLogIn.SetActive(true);
+            warningTextLogIn.text = "Invalid account!!";
         }
     }
     public void CerrarSesion()
@@ -121,14 +149,7 @@ public class BancoCuentas : MonoBehaviour
             i++;
         }
         
-        if (yaExiste)
-        {
-            avisoYaExistente.SetActive(true);
-        }
-        else
-        {
-            avisoYaExistente.SetActive(false);
-        }
+        
     }
     public void Editando()
     {
@@ -175,6 +196,8 @@ public class BancoCuentas : MonoBehaviour
     }
     public void LikeODislike(int estado)//-1 para dislike 1 para like
     {
+        
+
         if (GameManager.cuentaActiva == null)
         {
             AbrirPanelLogIn();
@@ -204,6 +227,11 @@ public class BancoCuentas : MonoBehaviour
             }
             GameManager.cantidadDislikes = ContarDislike();
         }
+        ActualizarPuntaje();
+    }
+    void ActualizarPuntaje()
+    {
+        scoreText.text = GameManager.cantidadDislikes.ToString();
     }
     int ContarDislike()
     {
@@ -243,5 +271,9 @@ public class BancoCuentas : MonoBehaviour
         cb.normalColor = colorDislike;
         cb.highlightedColor = colorDislike;
         dislikeButton.colors = cb;
+    }
+    bool ContraseniaIgualUsuario()
+    {
+        return (usuario.text == contrasenia.text); 
     }
 }

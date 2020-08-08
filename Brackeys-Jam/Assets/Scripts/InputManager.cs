@@ -14,9 +14,10 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)|| Input.GetMouseButtonDown(2))
         {
             MouseClicked = true;
+            
         }
         else
         {
